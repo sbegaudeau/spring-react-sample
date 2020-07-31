@@ -17,3 +17,20 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: sbegaudeau/spring-react-sample
           tags: latest
+      - name: Build push Heroku		
+        uses: docker/build-push-action@v1		
+        with:		
+          username: ${{ secrets.HEROKU_USERNAME }}		
+          password: ${{ secrets.HEROKU_PASSWORD }}		
+          registry: registry.heroku.com
+          repository: spring-react-sample/web
+          tags: latest
+      - name: Build push Github Packages
+        uses: docker/build-push-action@v1
+        with:
+          registry: docker.pkg.github.com
+          repository: ${{ github.repository }}/server
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          tag_with_ref: true
+          tags: latest
